@@ -1,0 +1,66 @@
+@import url("https://fonts.googleapis.com/css2?family=Red+Hat+Text:ital,wght@0,300..700;1,300..700&display=swap");
+
+.ant-menu,
+.ant-menu-item,
+.ant-menu-submenu-title {
+    font-family: "Red Hat Text", sans-serif !important;
+    padding: 2;
+    color: white;
+    font-size: 14px !important;
+}
+
+.custom-menu.ant-menu-light .ant-menu-item a,
+.custom-menu.ant-menu-light .ant-menu-submenu-title span {
+  color: white !important;
+}
+
+.custom-menu.ant-menu-light .ant-menu-submenu .ant-menu-item a {
+  color: white !important;
+}
+
+.custom-menu .ant-menu-submenu-arrow::before,
+.custom-menu .ant-menu-submenu-arrow::after {
+  background-color: white !important;
+}
+
+.custom-menu {
+    background: transparent;
+    color: white !important; 
+    border-inline-end: none !important;
+}
+.custom-menu .ant-menu-item-icon {
+    align-items: center !important;
+}
+
+.custom-menu .ant-menu-item {
+    color: aliceblue !important;
+    border-radius: 15px;
+    display: flex !important;
+    align-items: center !important;
+}
+
+.custom-menu .ant-menu-item:hover {
+    color: white !important;
+}
+
+.custom-menu .ant-menu-item-selected {
+    border-radius: 15px;
+    color: white;
+    background-color: transparent;
+}
+
+.custom-menu .ant-menu-item a {
+    transition: none;
+}
+
+.profile-link {
+    position: relative;
+}
+
+.profile-link-active {
+    color: white !important;
+    border-radius: 15px;
+    background-color: #370343;
+}
+
+
