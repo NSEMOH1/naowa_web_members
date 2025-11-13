@@ -67,7 +67,7 @@ export default function NewCoopSavings() {
     <div className="mt-7 w-[100vw] md:w-[61vw]">
       <Card>
         <CardBody>
-          <p className="font-bold text-xl pb-2 text-[#60C77C] underline">
+          <p className="font-bold text-xl pb-2 text-[#982323] underline">
             Savings Adjustment
           </p>
           <FormControl mb={4}>
@@ -94,7 +94,7 @@ export default function NewCoopSavings() {
             >
               Cancel
             </Button>
-            <Button w="full" bg="#60C77C" color="white" onClick={handleSubmit}>
+            <Button w="full" bg="#982323" color="white" onClick={handleSubmit}>
               Save
             </Button>
           </Flex>

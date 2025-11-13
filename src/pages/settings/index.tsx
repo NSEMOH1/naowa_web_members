@@ -827,14 +827,14 @@ const Settings = () => {
           {Items.map((data) => (
             <div
               key={data.id}
-              className="flex justify-between gap-2 items-center bg-[#F8FCFF] px-4 py-4 rounded-lg cursor-pointer"
+              className="flex justify-between gap-2 items-center bg-[#fbf0f0] px-4 py-4 rounded-lg cursor-pointer"
               onClick={() => handleItemClick(data)}
             >
               <div className="flex gap-2 items-center">
-                <div className="bg-[#20A3DB] rounded-full p-2">
-                  <data.icon size={15} color="white" />
+                <div className="bg-[#982323] rounded-full p-2">
+                  <data.icon size={15} color="#e9a0a0" />
                 </div>
-                <p className="text-[#20A3DB] font-semibold">{data.name}</p>
+                <p className="text-[#982323] font-semibold">{data.name}</p>
               </div>
               {data.type === "switch" ? (
                 <Switch
@@ -847,7 +847,7 @@ const Settings = () => {
                   onClick={(e) => e.stopPropagation()}
                 />
               ) : (
-                <ChevronRight color="#20A3DB" size={15} />
+                <ChevronRight color="#982323" size={15} />
               )}
             </div>
           ))}

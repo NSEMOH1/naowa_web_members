@@ -196,7 +196,7 @@ export default function WithdrawalForm() {
     return (
       <div className="flex justify-center items-center min-h-screen">
         <div className="w-full max-w-2xl p-8 rounded-xl shadow-md relative bg-white">
-          <p className="text-blue-400 font-semibold text-xl underline">
+          <p className="text-blackgit font-semibold text-xl underline">
             Preview
           </p>
           <div className="flex flex-col gap-5 mb-4">
@@ -215,7 +215,7 @@ export default function WithdrawalForm() {
               <p className="text-green-500">₦{amount}</p>
             </div>
           </div>
-          <Button w="full" bg="#0692DE" color="white" onClick={onOpen}>
+          <Button w="full" bg="#060402" color="white" onClick={onOpen}>
             Continue
           </Button>
         </div>
@@ -244,7 +244,7 @@ export default function WithdrawalForm() {
               <Button
                 isLoading={isLoading}
                 w="full"
-                bg="#0692DE"
+                bg="#060402"
                 color="white"
                 onClick={() => {
                   handleSubmit();
@@ -274,7 +274,7 @@ export default function WithdrawalForm() {
 
         <div className="flex gap-8 mb-6">
           <Button
-            bg="#53B175"
+            bg="#060402"
             color="white"
             onClick={() => navigate(routes.savings.personal)}
           >
@@ -345,7 +345,7 @@ export default function WithdrawalForm() {
         </div>
         <Button
           w="full"
-          bg="#0692DE"
+          bg="#060402"
           color="white"
           onClick={() => setConfirmPayment(true)}
           isDisabled={

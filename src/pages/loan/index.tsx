@@ -1,6 +1,5 @@
 import { Button, Card, CardBody } from "@chakra-ui/react";
 import { Upload, ArrowDownToLine, RefreshCcw } from "lucide-react";
-import { LoanHalfPieCharts } from "../../features/loan/charts";
 import { category } from "../../features/loan/data";
 import PaymentsComponent from "../../components/payments";
 import { useNavigate } from "react-router-dom";
@@ -9,12 +8,12 @@ import { useLoanBalances } from "../../hooks/useLoan";
 
 const Loan = () => {
   const navigate = useNavigate();
-  const { summary, chartData } = useLoanBalances();
+  const { summary } = useLoanBalances();
 
   return (
     <div className="mb-8">
       <p
-        className="text-[#0692DE] flex gap-2 items-center justify-end cursor-pointer"
+        className="text-[#982323] flex gap-2 items-center justify-end cursor-pointer"
         onClick={() => navigate(routes.loan.enrollment_status)}
       >
         <RefreshCcw />
@@ -22,7 +21,7 @@ const Loan = () => {
       </p>
       <div className="flex gap-8 mt-4 flex-col md:flex-row">
         <div className="flex-1">
-          <div className="p-4 bg-[#128DC1] text-white rounded-2xl h-[150px]">
+          <div className="p-4 bg-[#982323] text-white rounded-2xl h-[150px]">
             <p className="pb-3">Total Loan Balance</p>
             <div>
               <p className="text-2xl font-bold">₦{summary.totalOutstanding}</p>

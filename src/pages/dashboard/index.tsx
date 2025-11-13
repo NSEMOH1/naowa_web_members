@@ -16,13 +16,13 @@ const Dashboard = () => {
 
   return (
     <div className="w-full gap-4 mt-4">
-      <p className="pb-8 font-bold text-xl">Hello {member?.first_name} 👋</p>
+      <p className="pb-8 font-bold text-xl">Hello {member?.full_name} 👋</p>
       <div>
         <div className="flex w-full gap-4">
           <div className="flex-1">
             <div className="flex flex-col gap-4 md:flex-row">
-              <div className="p-4 shadow-lg bg-center text-white bg-[black] rounded-2xl h-[100px] w-full">
-                <p className="pb-3">Total Savings Balance</p>
+              <div className="p-4 shadow-lg bg-center text-white bg-[black] rounded-2xl h-[130px] w-full">
+                <p className="pb-10 font-bold">Total Savings Balance</p>
                 <div className="flex justify-between items-center">
                   <p className="text-2xl font-bold">₦{balance?.totalSavings}</p>
                   <div className="flex gap-2">
@@ -36,20 +36,13 @@ const Dashboard = () => {
                   </div>
                 </div>
               </div>
-              <div className="p-4 text-white bg-[#982323] rounded-2xl h-[100px] w-full">
-                <p className="pb-3">Total Loan Balance</p>
+              <div className="p-4 text-white bg-[#982323] rounded-2xl h-[130px] w-full">
+                <p className="pb-10 font-bold">Total Loan Balance</p>
                 <div className="flex justify-between items-center">
                   <p className="text-2xl font-bold">
                     ₦{summary.totalOutstanding.toString()}
                   </p>
                   <div className="flex gap-2">
-                    <Button
-                      size="sm"
-                      leftIcon={<Upload size={14} color="black" />}
-                      onClick={() => navigate(routes.payments.index)}
-                    >
-                      Deposit
-                    </Button>
                     <Button
                       border="1px solid white"
                       bg="transparent"
@@ -91,14 +84,14 @@ const Dashboard = () => {
                   </p>
                 </div>
                 <div
-                  style={{ background: "#53B175" }}
+                  style={{ background: "#065535" }}
                   className="p-4 py-6 text-white w-full rounded-xl shadow-lg"
                 >
                   <div className="flex items-center justify-between">
                     <p className="text-xs font-bold">Emergency Loan</p>
                     <div
                       style={{
-                        background: "#53B175",
+                        background: "#065535",
                         border: "1px solid gray",
                       }}
                       className={`inline-flex p-1 rounded-full`}
@@ -111,14 +104,14 @@ const Dashboard = () => {
                   </p>
                 </div>
                 <div
-                  style={{ background: "#444012" }}
+                  style={{ background: "#000080" }}
                   className="p-4 py-6 text-white w-full rounded-xl shadow-lg"
                 >
                   <div className="flex items-center justify-between">
                     <p className="text-xs font-bold">Commodity Loan</p>
                     <div
                       style={{
-                        background: "#444012",
+                        background: "#000080",
                         border: "1px solid gray",
                       }}
                       className={`inline-flex p-1 rounded-full`}
@@ -129,14 +122,14 @@ const Dashboard = () => {
                   <p className="text-lg font-bold">COMING SOON</p>
                 </div>
                 <div
-                  style={{ background: "#006980" }}
+                  style={{ background: "#daa520" }}
                   className="p-4 py-6 text-white w-full rounded-xl shadow-lg"
                 >
                   <div className="flex items-center justify-between">
                     <p className="text-xs font-bold">Housing Loan</p>
                     <div
                       style={{
-                        background: "#006980",
+                        background: "#daa520",
                         border: "1px solid gray",
                       }}
                       className={`inline-flex p-1 rounded-full`}
@@ -147,14 +140,14 @@ const Dashboard = () => {
                   <p className="text-lg font-bold">COMING SOON</p>
                 </div>
                 <div
-                  style={{ background: "#EBB9A1" }}
+                  style={{ background: "#66cccc" }}
                   className="p-4 py-6 text-white w-full rounded-xl shadow-lg"
                 >
                   <div className="flex items-center justify-between">
                     <p className="text-xs font-bold">Home Appliances</p>
                     <div
                       style={{
-                        background: "#EBB9A1",
+                        background: "#66cccc",
                         border: "1px solid gray",
                       }}
                       className={`inline-flex p-1 rounded-full`}
@@ -172,7 +165,7 @@ const Dashboard = () => {
               <Card width="full">
                 <CardBody>
                   <p className="flex gap-2 text-sm font-thin items-center">
-                    <Send color="#7763EA" size={15} />
+                    <Send color="#982323" size={15} />
                     Transfer
                   </p>
                   <div className="flex gap-2 items-center">
@@ -183,7 +176,7 @@ const Dashboard = () => {
                     />
                     <div
                       style={{
-                        background: "#7763EA",
+                        background: "#982323",
                         border: "1px solid white",
                       }}
                       className={`inline-flex p-1 rounded-full`}
@@ -199,7 +192,7 @@ const Dashboard = () => {
               <Card width="full">
                 <CardBody>
                   <p className="flex gap-2 text-sm font-thin items-center">
-                    <HandCoins color="#7763EA" size={15} />
+                    <HandCoins color="#982323" size={15} />
                     Deposit
                   </p>
                   <div className="flex gap-2 items-center">
@@ -210,7 +203,7 @@ const Dashboard = () => {
                     />
                     <div
                       style={{
-                        background: "#7763EA",
+                        background: "#982323",
                         border: "1px solid white",
                       }}
                       className={`inline-flex p-1 rounded-full`}

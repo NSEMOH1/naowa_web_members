@@ -214,7 +214,7 @@ const SideBar = ({ children }: { children: ReactNode }) => {
         </div>
         <Flex justify="center" mt={4} mb={2}>
           <Avatar
-            bg="grey"
+            bg="white"
             size="xl"
             name={`${member?.full_name}`}
             src={`${member?.full_name}`}
@@ -228,10 +228,10 @@ const SideBar = ({ children }: { children: ReactNode }) => {
             </>
           ) : (
             <>
-              <p className="font-bold">
+              <p className="font-bold text-white">
                 {member?.full_name}
               </p>
-              <p className="text-xs text-gray-500">Member</p>
+              <p className="text-xs text-white">Member</p>
             </>
           )}
         </div>

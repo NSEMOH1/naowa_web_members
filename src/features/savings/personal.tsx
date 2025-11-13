@@ -14,7 +14,6 @@ import { useNavigate } from "react-router-dom";
 import { routes } from "../../lib/routes";
 import { useState } from "react";
 import successIcon from "../../assets/success.svg";
-import api from "../../api";
 
 export default function NewPersonalSavings() {
     const navigate = useNavigate();
@@ -23,41 +22,41 @@ export default function NewPersonalSavings() {
     const [isLoading, setIsLoading] = useState(false);
     const [amount, setAmount] = useState("");
 
-    const handleSubmit = async () => {
-        setIsLoading(true);
-        try {
-            await api.post("/api/savings/deposit", {
-                amount: parseFloat(amount),
-                category_name: "QUICK"
-            });
-            setIsComplete(true);
-        } catch (error: any) {
-            console.error('Loan application error:', error);
+    // const handleSubmit = async () => {
+    //     setIsLoading(true);
+    //     try {
+    //         await api.post("/api/savings/deposit", {
+    //             amount: parseFloat(amount),
+    //             category_name: "QUICK"
+    //         });
+    //         setIsComplete(true);
+    //     } catch (error: any) {
+    //         console.error('Loan application error:', error);
 
-            let errorMessage = 'Failed to submit loan application';
-            if (error.response) {
-                if (error.response.data?.details) {
-                    errorMessage = error.response.data.details;
-                } else if (error.response.data?.message) {
-                    errorMessage = error.response.data.message;
-                } else if (error.response.statusText) {
-                    errorMessage = error.response.statusText;
-                }
-            } else if (error.request) {
-                errorMessage = 'No response received from server';
-            } else {
-                errorMessage = error.message || 'Error setting up request';
-            }
+    //         let errorMessage = 'Failed to submit loan application';
+    //         if (error.response) {
+    //             if (error.response.data?.details) {
+    //                 errorMessage = error.response.data.details;
+    //             } else if (error.response.data?.message) {
+    //                 errorMessage = error.response.data.message;
+    //             } else if (error.response.statusText) {
+    //                 errorMessage = error.response.statusText;
+    //             }
+    //         } else if (error.request) {
+    //             errorMessage = 'No response received from server';
+    //         } else {
+    //             errorMessage = error.message || 'Error setting up request';
+    //         }
 
-            toast({
-                title: 'Deposit Failed',
-                description: errorMessage,
-                status: 'error',
-            });
-        } finally {
-            setIsLoading(false);
-        }
-    };
+    //         toast({
+    //             title: 'Deposit Failed',
+    //             description: errorMessage,
+    //             status: 'error',
+    //         });
+    //     } finally {
+    //         setIsLoading(false);
+    //     }
+    // };
 
     const handleSuccess = () => {
         window.location.reload();
@@ -68,10 +67,10 @@ export default function NewPersonalSavings() {
         return (
             <VStack className="shadow-lg" w='50vw' spacing={6} py={10} borderRadius={10} mt={6}>
                 <Heading color="#0692DE" size="lg">Success!</Heading>
-                <p className="text-[#0692DE]">Saving Adjusted WEF October 2024</p>
+                <p className="text-[#982323]">Saving Adjusted WEF October 2024</p>
                 <img width={200} src={successIcon} alt="success" />
                 <Button
-                    bg='#60C77C'
+                    bg='#982323'
                     onClick={handleSuccess}
                     mt={6}
                     width="50%"
@@ -86,7 +85,7 @@ export default function NewPersonalSavings() {
         <div className="mt-7 w-[100vw] md:w-[50vw]">
             <Card>
                 <CardBody>
-                    <p className="font-bold text-xl pb-2 text-[#60C77C] underline">Quick Saving</p>
+                    <p className="font-bold text-xl pb-2 text-[#982323] underline">Quick Saving</p>
 
                     <FormControl mb={4}>
                         <FormLabel>Amount of Savings</FormLabel>
@@ -107,7 +106,7 @@ export default function NewPersonalSavings() {
                         </Button>
                         <Button
                             w='full'
-                            bg='#60C77C'
+                            bg='#982323'
                             color='white'
                             onClick={() => navigate(routes.payments.index)}
                             isLoading={isLoading}

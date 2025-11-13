@@ -10,15 +10,15 @@ const Withdrawal = () => {
       <PageHeader title="Withdrawal" />
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 mt-6 w-full">
         <div
-          style={{ background: "#89B882" }}
+          style={{ background: "#003366" }}
           className="shadow-xl p-4 rounded-xl w-full"
         >
           <div className="flex justify-between items-start">
             <div>
-              <p className="font-bold text-sm text-gray-700">
+              <p className="font-bold text-sm text-white">
                 Total Savings Balance
               </p>
-              <p className="font-bold text-lg pt-2">₦{balance?.totalSavings}</p>
+              <p className="font-bold text-lg text-white pt-2">₦{balance?.totalSavings}</p>
             </div>
             <div
               style={{ background: "#E5FAFF" }}
