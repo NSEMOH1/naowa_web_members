@@ -131,7 +131,7 @@ const Transaction = () => {
             <div className="flex flex-col justify-center items-center">
               <p className="font-bold text-2xl">
                 <span>
-                  {member?.first_name} {member?.last_name}
+                  {member?.full_name}
                 </span>
               </p>
             </div>
@@ -165,7 +165,7 @@ const Transaction = () => {
         columns={transactionColumns}
         rowKey="id"
         scrollX={1200}
-        backgroundImage="/src/assets/sappper-logo.png"
+        backgroundImage="/src/assets/naowa.png"
         tableHeaderBg="#0692DE"
         tableHeaderColor="white"
       />

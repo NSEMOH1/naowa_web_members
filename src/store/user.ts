@@ -3,19 +3,25 @@ import api from "../api";
 
 interface Member {
   id: string;
-  first_name: string;
-  last_name: string;
+  full_name: string;
   email: string;
   phone: string;
   address: string;
-  rank: string;
-  unit: string;
-  service_number: string;
+  username: string;
   date_of_birth: string;
   bank: {
     account_name: string;
     account_number: string;
-    name: string;
+    bank_name: string;
+  }[];
+  next_of_kin: {
+    first_name: string;
+    last_name: string;
+    relationship: string;
+    gender: string;
+    phone: string;
+    email: string;
+    address: string;
   }[];
   created_at: string;
   updated_at: string;

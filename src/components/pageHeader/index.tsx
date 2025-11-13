@@ -54,7 +54,7 @@ export const PageHeader = ({
 
       <div className="md:flex items-center gap-2 hidden">
         <p className="font-bold text-[#0692DE] w-[150px]">NAOWA</p>
-        <Logo showText={false} />
+        <Logo className="w-20" showText={false} />
       </div>
     </div>
   );

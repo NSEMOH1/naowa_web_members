@@ -216,8 +216,8 @@ const SideBar = ({ children }: { children: ReactNode }) => {
           <Avatar
             bg="grey"
             size="xl"
-            name={`${member?.first_name} ${member?.last_name}`}
-            src={`${member?.first_name} ${member?.last_name}`}
+            name={`${member?.full_name}`}
+            src={`${member?.full_name}`}
           />
         </Flex>
         <div className="flex flex-col justify-center items-center mb-4">
@@ -229,7 +229,7 @@ const SideBar = ({ children }: { children: ReactNode }) => {
           ) : (
             <>
               <p className="font-bold">
-                {member?.first_name} {member?.last_name}
+                {member?.full_name}
               </p>
               <p className="text-xs text-gray-500">Member</p>
             </>
@@ -252,7 +252,6 @@ const SideBar = ({ children }: { children: ReactNode }) => {
           <LogOut color="white" />
           {!collapsed && <span className="text-white">Log Out</span>}
         </Link>
-        <p className="italic text-center pt-6 text-gray-50">Coop Link</p>
         {/* <Link
           to="/settings/profile"
           className={`${currentPath === "/settings/profile"

@@ -292,7 +292,7 @@ const ForgotPassword = () => {
 
   return (
     <div className="p-10 bg-gray-100 h-[100vh]">
-      <Logo showText={false} />
+      <Logo className="w-30" showText={false} />
       <div className="flex justify-center">
         <Box className="w-[90vw] md:w-[40vw] rounded-lg bg-white p-8">
           <Box display={{ base: "none", md: "block" }}>

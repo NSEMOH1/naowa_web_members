@@ -37,7 +37,13 @@ interface LoanFormData {
   duration: number;
   applicationLetter: File | null;
   letterOfIndebtedness: File | null;
-  letterOfRecommendation: File | null;
+  validId: File | null;
+  incomeProof: File | null;
+  accountStatement: File | null;
+  utilityBill: File | null;
+  guarantorLetter: File | null;
+  guarantorPassport: File | null;
+  personalPassport: File | null;
 }
 
 interface OTPResponse {
@@ -48,14 +54,16 @@ interface OTPResponse {
 interface LoanApplicationResponse {
   loan: {
     id: string;
-    reference: string
+    reference: string;
   };
 }
 
 const steps = [
   { title: "Loan Information" },
   { title: "Member Information" },
-  { title: "Upload Documents" },
+  { title: "Upload Documents (1/3)" },
+  { title: "Upload Documents (2/3)" },
+  { title: "Upload Documents (3/3)" },
   { title: "Summary" },
   { title: "OTP Verification" },
   { title: "Success" },
@@ -82,7 +90,13 @@ const LoanEnrollment = () => {
     duration: 0,
     applicationLetter: null,
     letterOfIndebtedness: null,
-    letterOfRecommendation: null,
+    validId: null,
+    incomeProof: null,
+    accountStatement: null,
+    utilityBill: null,
+    guarantorLetter: null,
+    guarantorPassport: null,
+    personalPassport: null,
   });
 
   useEffect(() => {
@@ -101,10 +115,10 @@ const LoanEnrollment = () => {
   );
 
   const handleFileUpload = (
-    field:
-      | "applicationLetter"
-      | "letterOfIndebtedness"
-      | "letterOfRecommendation",
+    field: keyof Omit<
+      LoanFormData,
+      "loanType" | "isServicingLoan" | "amount" | "duration"
+    >,
     file: File
   ) => {
     if (file.size > 3 * 1024 * 1024) {
@@ -136,10 +150,10 @@ const LoanEnrollment = () => {
   };
 
   const removeFile = (
-    field:
-      | "applicationLetter"
-      | "letterOfIndebtedness"
-      | "letterOfRecommendation"
+    field: keyof Omit<
+      LoanFormData,
+      "loanType" | "isServicingLoan" | "amount" | "duration"
+    >
   ) => {
     setFormData((prev) => ({ ...prev, [field]: null }));
   };
@@ -158,11 +172,23 @@ const LoanEnrollment = () => {
         return !!(
           formData.applicationLetter &&
           formData.letterOfIndebtedness &&
-          formData.letterOfRecommendation
+          formData.validId
         );
       case 3:
-        return true;
+        return !!(
+          formData.incomeProof &&
+          formData.accountStatement &&
+          formData.utilityBill
+        );
       case 4:
+        return !!(
+          formData.guarantorLetter &&
+          formData.guarantorPassport &&
+          formData.personalPassport
+        );
+      case 5:
+        return true;
+      case 6:
         return otp.length === 6;
       default:
         return true;
@@ -174,7 +200,7 @@ const LoanEnrollment = () => {
   };
 
   const nextStep = () => {
-    if (activeStep === 3) {
+    if (activeStep === 5) {
       handleSubmit();
     } else {
       setActiveStep((prev) => prev + 1);
@@ -202,11 +228,26 @@ const LoanEnrollment = () => {
       if (formData.letterOfIndebtedness) {
         formDataToSend.append("nonIndebtedness", formData.letterOfIndebtedness);
       }
-      if (formData.letterOfRecommendation) {
-        formDataToSend.append(
-          "recommendation",
-          formData.letterOfRecommendation
-        );
+      if (formData.validId) {
+        formDataToSend.append("validId", formData.validId);
+      }
+      if (formData.incomeProof) {
+        formDataToSend.append("incomeProof", formData.incomeProof);
+      }
+      if (formData.accountStatement) {
+        formDataToSend.append("accountStatement", formData.accountStatement);
+      }
+      if (formData.utilityBill) {
+        formDataToSend.append("utilityBill", formData.utilityBill);
+      }
+      if (formData.guarantorLetter) {
+        formDataToSend.append("guarantorLetter", formData.guarantorLetter);
+      }
+      if (formData.guarantorPassport) {
+        formDataToSend.append("guarantorPassport", formData.guarantorPassport);
+      }
+      if (formData.personalPassport) {
+        formDataToSend.append("personalPassport", formData.personalPassport);
       }
       formDataToSend.append("data", JSON.stringify(payload));
 
@@ -223,7 +264,7 @@ const LoanEnrollment = () => {
       if (response.data) {
         setLoanId(response.data.loan.id);
         setLoanReference(response.data.loan.reference);
-        setActiveStep(4);
+        setActiveStep(6);
         toast({
           title: "Application Submitted",
           description: "OTP has been sent to your registered contact",
@@ -253,7 +294,7 @@ const LoanEnrollment = () => {
       );
 
       if (response.data && response.data.success) {
-        setActiveStep(5);
+        setActiveStep(7);
         toast({
           title: "Verification Successful",
           description: "Your loan application has been verified",
@@ -365,10 +406,7 @@ const LoanEnrollment = () => {
     <VStack spacing={4} align="stretch">
       <FormControl isRequired>
         <FormLabel>Full Name</FormLabel>
-        <Input
-          value={`${member?.first_name} ${member?.last_name}`}
-          isReadOnly
-        />
+        <Input value={`${member?.full_name}`} isReadOnly />
       </FormControl>
 
       <FormControl isRequired>
@@ -385,98 +423,107 @@ const LoanEnrollment = () => {
         <FormLabel>Address</FormLabel>
         <Textarea value={member?.address} isReadOnly />
       </FormControl>
-
-      <FormControl isRequired>
-        <FormLabel>Rank</FormLabel>
-        <Input value={member?.rank} isReadOnly />
-      </FormControl>
     </VStack>
   );
 
-  const renderDocumentUpload = () => {
-    const renderFileUploadBox = (
-      label: string,
-      field:
-        | "applicationLetter"
-        | "letterOfIndebtedness"
-        | "letterOfRecommendation"
-    ) => {
-      const file = formData[field];
-
-      return (
-        <FormControl isRequired>
-          <FormLabel>{label}</FormLabel>
-          {file ? (
-            <Box
-              border="1px solid"
-              borderColor="gray.200"
-              borderRadius="md"
-              p={4}
-              bg="gray.50"
-            >
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <FileText size={20} />
-                  <Text fontSize="sm">{file.name}</Text>
-                </div>
-                <Button
-                  size="sm"
-                  colorScheme="red"
-                  variant="ghost"
-                  onClick={() => removeFile(field)}
-                >
-                  <X size={16} />
-                </Button>
-              </div>
-            </Box>
-          ) : (
-            <Box
-              border="2px dashed"
-              borderColor="gray.300"
-              borderRadius="md"
-              p={6}
-              textAlign="center"
-              cursor="pointer"
-              _hover={{ borderColor: "blue.500", bg: "blue.50" }}
-              onClick={() => document.getElementById(field)?.click()}
-            >
-              <Upload
-                size={24}
-                style={{ margin: "0 auto", marginBottom: "8px" }}
-              />
-              <Text fontSize="sm" color="gray.600">
-                Click to upload or drag and drop
-              </Text>
-              <Text fontSize="xs" color="gray.500">
-                JPEG, PNG, PDF (Max 3MB)
-              </Text>
-              <input
-                id={field}
-                type="file"
-                accept=".jpeg,.png,.pdf"
-                style={{ display: "none" }}
-                onChange={(e) => {
-                  const file = e.target.files?.[0];
-                  if (file) handleFileUpload(field, file);
-                }}
-              />
-            </Box>
-          )}
-        </FormControl>
-      );
-    };
+  const renderFileUploadBox = (
+    label: string,
+    field: keyof Omit<
+      LoanFormData,
+      "loanType" | "isServicingLoan" | "amount" | "duration"
+    >
+  ) => {
+    const file = formData[field];
 
     return (
-      <VStack spacing={4} align="stretch">
-        {renderFileUploadBox("Application Letter", "applicationLetter")}
-        {renderFileUploadBox("Letter of Indebtedness", "letterOfIndebtedness")}
-        {renderFileUploadBox(
-          "Letter of Recommendation",
-          "letterOfRecommendation"
+      <FormControl isRequired>
+        <FormLabel>{label}</FormLabel>
+        {file ? (
+          <Box
+            border="1px solid"
+            borderColor="gray.200"
+            borderRadius="md"
+            p={4}
+            bg="gray.50"
+          >
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <FileText size={20} />
+                <Text fontSize="sm">{file.name}</Text>
+              </div>
+              <Button
+                size="sm"
+                colorScheme="red"
+                variant="ghost"
+                onClick={() => removeFile(field)}
+              >
+                <X size={16} />
+              </Button>
+            </div>
+          </Box>
+        ) : (
+          <Box
+            border="2px dashed"
+            borderColor="gray.300"
+            borderRadius="md"
+            p={6}
+            textAlign="center"
+            cursor="pointer"
+            _hover={{ borderColor: "blue.500", bg: "blue.50" }}
+            onClick={() => document.getElementById(field)?.click()}
+          >
+            <Upload
+              size={24}
+              style={{ margin: "0 auto", marginBottom: "8px" }}
+            />
+            <Text fontSize="sm" color="gray.600">
+              Click to upload or drag and drop
+            </Text>
+            <Text fontSize="xs" color="gray.500">
+              JPEG, PNG, PDF (Max 3MB)
+            </Text>
+            <input
+              id={field}
+              type="file"
+              accept=".jpeg,.png,.pdf"
+              style={{ display: "none" }}
+              onChange={(e) => {
+                const file = e.target.files?.[0];
+                if (file) handleFileUpload(field, file);
+              }}
+            />
+          </Box>
         )}
-      </VStack>
+      </FormControl>
     );
   };
+
+  const renderDocumentUpload1 = () => (
+    <VStack spacing={4} align="stretch">
+      {renderFileUploadBox("Application Letter", "applicationLetter")}
+      {renderFileUploadBox(
+        "Letter of Non-Indebtedness",
+        "letterOfIndebtedness"
+      )}
+      {renderFileUploadBox("Valid ID Card", "validId")}
+    </VStack>
+  );
+
+  const renderDocumentUpload2 = () => (
+    <VStack spacing={4} align="stretch">
+      {renderFileUploadBox("Proof of Income", "incomeProof")}
+      {renderFileUploadBox("Bank Account Statement", "accountStatement")}
+      {renderFileUploadBox("Utility Bill", "utilityBill")}
+    </VStack>
+  );
+
+  const renderDocumentUpload3 = () => (
+    <VStack spacing={4} align="stretch">
+      {renderFileUploadBox("Guarantor's Letter", "guarantorLetter")}
+      {renderFileUploadBox("Guarantor's Passport", "guarantorPassport")}
+      {renderFileUploadBox("Personal Passport Photo", "personalPassport")}
+    </VStack>
+  );
 
   const renderSummary = () => (
     <VStack spacing={4} align="stretch">
@@ -503,7 +550,7 @@ const LoanEnrollment = () => {
         <Heading size="sm" mb={2}>
           Member Information
         </Heading>
-        <Text fontSize="sm">{`${member?.first_name} ${member?.last_name}`}</Text>
+        <Text fontSize="sm">{`${member?.full_name}`}</Text>
         <Text fontSize="sm">{member?.email}</Text>
         <Text fontSize="sm">{member?.phone}</Text>
       </Box>
@@ -513,8 +560,14 @@ const LoanEnrollment = () => {
           Documents
         </Heading>
         <Text fontSize="sm">✓ Application Letter</Text>
-        <Text fontSize="sm">✓ Letter of Indebtedness</Text>
-        <Text fontSize="sm">✓ Letter of Recommendation</Text>
+        <Text fontSize="sm">✓ Letter of Non-Indebtedness</Text>
+        <Text fontSize="sm">✓ Valid ID Card</Text>
+        <Text fontSize="sm">✓ Proof of Income</Text>
+        <Text fontSize="sm">✓ Bank Account Statement</Text>
+        <Text fontSize="sm">✓ Utility Bill</Text>
+        <Text fontSize="sm">✓ Guarantor's Letter</Text>
+        <Text fontSize="sm">✓ Guarantor's Passport</Text>
+        <Text fontSize="sm">✓ Personal Passport Photo</Text>
       </Box>
     </VStack>
   );
@@ -572,7 +625,9 @@ const LoanEnrollment = () => {
   const stepContents = [
     renderLoanInfo(),
     renderMemberInfo(),
-    renderDocumentUpload(),
+    renderDocumentUpload1(),
+    renderDocumentUpload2(),
+    renderDocumentUpload3(),
     renderSummary(),
     renderOTPVerification(),
     renderSuccess(),
@@ -581,7 +636,7 @@ const LoanEnrollment = () => {
   return (
     <Modal
       isOpen={isOpen}
-      onClose={activeStep === 5 ? handleSuccessClose : handleClose}
+      onClose={activeStep === 7 ? handleSuccessClose : handleClose}
       size="lg"
       closeOnOverlayClick={false}
       isCentered
@@ -594,16 +649,16 @@ const LoanEnrollment = () => {
             Step {activeStep + 1} of {steps.length}
           </Text>
         </ModalHeader>
-        {activeStep !== 5 && <ModalCloseButton isDisabled={isSubmitting} />}
+        {activeStep !== 7 && <ModalCloseButton isDisabled={isSubmitting} />}
 
         <ModalBody pb={6}>{stepContents[activeStep]}</ModalBody>
 
         <ModalFooter>
-          {activeStep === 5 ? (
+          {activeStep === 7 ? (
             <Button colorScheme="blue" onClick={handleSuccessClose} w="full">
               Return to Dashboard
             </Button>
-          ) : activeStep === 4 ? (
+          ) : activeStep === 6 ? (
             <Button
               colorScheme="blue"
               onClick={handleVerifyOTP}
@@ -630,11 +685,11 @@ const LoanEnrollment = () => {
                 onClick={nextStep}
                 isLoading={isSubmitting}
                 loadingText={
-                  activeStep === 3 ? "Submitting..." : "Processing..."
+                  activeStep === 5 ? "Submitting..." : "Processing..."
                 }
                 isDisabled={!isStepValid()}
               >
-                {activeStep === 3 ? "Submit Application" : "Continue"}
+                {activeStep === 5 ? "Submit Application" : "Continue"}
               </Button>
             </>
           )}

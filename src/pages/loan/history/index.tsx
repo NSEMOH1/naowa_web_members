@@ -185,7 +185,7 @@ const LoanHistory: React.FC = () => {
                     columns={loanColumns}
                     rowKey="key"
                     scrollX={1200}
-                    backgroundImage="/src/assets/sappper-logo.png"
+                    backgroundImage="/src/assets/naowa.png"
                 />
             )}
         </div>
